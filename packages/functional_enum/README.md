@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/Elias8/functional_enum.svg?branch=master)](https://travis-ci.org/Elias8/functional_enum)
+[![pub package](https://img.shields.io/pub/v/functional_enum.svg)](https://pub.dartlang.org/packages/functional_enum)
+
 # Functional Enum
 
 Code generator for functional enum that makes the use of enums much better.
