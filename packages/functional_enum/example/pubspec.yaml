@@ -8,7 +8,7 @@ dependencies:
   functional_enum_annotation: ^1.0.0
 
 dev_dependencies:
-  build_runner:
+  build_runner: ^1.10.1
   test: ^1.15.3
   functional_enum:
     path: ../
