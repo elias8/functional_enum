@@ -17,8 +17,6 @@ script:
   - pub run build_runner build --delete-conflicting-outputs
   - pub run test
   - dartanalyzer
-  - rm -rf **/*.freezed.dart **/*.g.dart
-  - flutter format --set-exit-if-changed lib test
   - set +e
   - cd -
   - rm -rf example
