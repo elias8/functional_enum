@@ -16,7 +16,7 @@ script:
   - pub get
   - pub run build_runner build --delete-conflicting-outputs
   - pub run test
-  - dartanalyzer
+  - dartanalyzer .
   - set +e
   - cd -
   - rm -rf example
