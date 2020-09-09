@@ -1,0 +1,30 @@
+language: bash
+os:
+  - osx
+env:
+  - FLUTTER_CHANNEL="stable"
+before_script:
+  - cd ..
+  - git clone https://github.com/flutter/flutter.git -b $FLUTTER_CHANNEL
+  - export PATH=$PATH:$PWD/flutter/bin:$PWD/flutter/bin/cache/dart-sdk/bin
+  - cd -
+  - flutter doctor
+script:
+  - cd packages/functional_enum
+  - cd example
+  - set -e
+  - pub get
+  - pub run build_runner build --delete-conflicting-outputs
+  - pub run test
+  - dartanalyzer
+  - rm -rf **/*.freezed.dart **/*.g.dart
+  - flutter format --set-exit-if-changed lib test
+  - set +e
+  - cd -
+  - rm -rf example
+
+matrix:
+  fast_finish: true
+cache:
+  directories:
+    - $HOME/.pub-cache

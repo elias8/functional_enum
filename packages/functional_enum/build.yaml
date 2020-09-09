@@ -1,0 +1,8 @@
+builders:
+  functional_enum:
+    target: ":functional_enum"
+    import: "package:functional_enum/builder.dart"
+    builder_factories: ["functionalEnum"]
+    build_extensions: { ".dart": [".g.dart"] }
+    auto_apply: dependents
+    build_to: source
