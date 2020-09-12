@@ -10,6 +10,6 @@ dependencies:
   analyzer: '>=0.39.5 <0.40.0'
   build: ">=0.12.6 <2.0.0"
   build_config: ">=0.4.2 <1.0.0"
-  functional_enum_annotation: ^1.0.0
+  functional_enum_annotation: ^1.0.1
   meta: ^1.2.3
   source_gen: ^0.9.6
