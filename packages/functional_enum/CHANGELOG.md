@@ -1,3 +1,7 @@
+## 1.0.3
+
+- Fixed dependency conflict
+
 ## 1.0.2
 
 - Fixed dependency conflict
