@@ -1,3 +1,7 @@
+## 1.0.2
+
+- Fixed dependency conflict
+
 ## 1.0.1
 
 - Fix build_runner issue in the example package.
