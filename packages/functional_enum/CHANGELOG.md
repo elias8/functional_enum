@@ -1,3 +1,7 @@
+## 1.1.1
+
+- Updated README.md
+
 ## 1.1.0
 
 - Migrated to null-safety
