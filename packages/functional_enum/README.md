@@ -2,6 +2,7 @@
 [![pub package](https://img.shields.io/pub/v/functional_enum.svg)](https://pub.dartlang.org/packages/functional_enum)
 
 # Functional Enum
+_Freezed, but for enums._
 
 Code generator for functional enum that makes the use of enums much better.
 
