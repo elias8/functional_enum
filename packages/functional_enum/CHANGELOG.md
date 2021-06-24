@@ -1,3 +1,7 @@
+## 1.1.0
+
+- Migrated to null-safety
+
 ## 1.0.3
 
 - Fixed dependency conflict
