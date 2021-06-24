@@ -4,12 +4,12 @@ version: 1.0.3
 homepage: https://github.com/Elias8/functional_enum
 
 environment:
-  sdk: '>=2.8.1 <3.0.0'
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
-  analyzer: '>=0.39.5 <0.40.0'
-  build: ">=0.12.6 <2.0.0"
-  build_config: ">=0.4.2 <1.0.0"
-  functional_enum_annotation: ^1.0.1
-  meta: ^1.1.8
-  source_gen: ^0.9.6
+  analyzer: ^1.7.0
+  build: ^2.0.2
+  build_config: ^1.0.0
+  functional_enum_annotation: ^1.2.0
+  meta: ^1.4.0
+  source_gen: ^1.0.2

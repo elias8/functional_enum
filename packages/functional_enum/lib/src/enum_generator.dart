@@ -1,5 +1,4 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:meta/meta.dart';
 
 class EnumExtensionGenerator {
   final ClassElement element;
@@ -16,6 +15,15 @@ class EnumExtensionGenerator {
     return _generated.toString();
   }
 
+  void _generateChecker(FieldElement e) {
+    var name = e.name;
+    name = name.replaceRange(0, 1, name[0].toUpperCase());
+    final field = 'bool get is$name => this == ${element.name}.${e.name};';
+    _generated.writeln(field);
+  }
+
+  void _generateCheckers() => element.fields.skip(2).forEach(_generateChecker);
+
   void _generateExtensionBottom() => _generated.writeln('}');
 
   void _generateExtensionHeader() {
@@ -30,92 +38,96 @@ class EnumExtensionGenerator {
     _generated.writeln(methodGenerator.generate(MethodType.maybeWhen));
     _generated.writeln(methodGenerator.generate(MethodType.when));
   }
-
-  void _generateCheckers() => element.fields.skip(2).forEach(_generateChecker);
-
-  void _generateChecker(FieldElement e) {
-    var name = e.name;
-    name = name.replaceRange(0, 1, name[0].toUpperCase());
-    final field = 'bool get is$name => this == ${element.name}.${e.name};';
-    _generated.writeln(field);
-  }
 }
 
 class MethodGenerator {
   final ClassElement element;
   final List<FieldElement> values;
   final _generated = StringBuffer();
-  bool _shouldAddArgs;
-  bool _isRequiredType;
-  MethodType _methodType;
+  late MethodType _methodType;
 
-  MethodGenerator({@required this.element})
+  MethodGenerator({required this.element})
       : values = element.fields.skip(2).toList();
 
   String generate(MethodType type) {
     _initialize(type);
-    _ignoreReturnTypeWarnings();
     _addReturnTypeAndName();
-    _addParams();
-    _addAssertions();
-    _addHandlers();
+    _addParameters();
+    _addRequiredParamHandler();
+    _addOptionalParamHandler();
     return _generated.toString();
   }
 
-  void _addAssertions() {
-    _generated.writeln('{');
-    values.forEach(_assertField);
-    if (!_isRequiredType) _generated.write('assert(orElse != null);');
+  void _addOptionalParamHandler() {
+    if (!_isParamRequired()) {
+      _generated.writeln('{');
+      for (int i = 0; i < values.length; i++) {
+        final name = values[i].name;
+        final enumType = '${element.name}.$name';
+        final ifCondition = 'if(this == $enumType && $name != null)';
+        final condition = i == 0 ? ifCondition : 'else $ifCondition';
+        _generated.writeln(condition);
+        _generated.writeln('{ ${_getReturnStatement(name)} }');
+      }
+      _generated.writeln('else { return orElse(); }');
+      _generated.writeln('}');
+    }
   }
 
-  void _addHandler(FieldElement e) {
-    final name = e.name;
-    final notNull = _isRequiredType ? '' : '&& $name != null';
-    final condition = 'if(this == ${element.name}.$name $notNull)';
-    final returnValue = 'return $name(${_shouldAddArgs ? 'this' : ''});';
-    _generated.writeln('$condition $returnValue');
+  void _addOrElseCallBack() {
+    if (!_isParamRequired())
+      _generated.writeln('required R Function() orElse,');
   }
 
-  void _addHandlers() {
-    values.forEach(_addHandler);
-    if (!_isRequiredType) _generated.write('return orElse();');
-    _generated.writeln('}');
+  void _addParam(FieldElement field) {
+    final name = field.name;
+    final nullable = _isParamRequired() ? '' : '?';
+    final required = _isParamRequired() ? 'required' : '';
+    final returnType = 'R Function(${_getCallBackArg(name)})';
+    _generated.writeln('$required $returnType$nullable ${field.name},');
   }
 
-  void _addParam(FieldElement e) {
-    final name = e.name;
-    final required = _isRequiredType ? '@required' : '';
-    final args = '${_shouldAddArgs ? '${element.name} $name' : ''}';
-    final returnType = 'R Function($args)';
-    _generated.writeln('$required $returnType ${e.name},');
-  }
-
-  void _addParams() {
+  void _addParameters() {
     _generated.writeln('({');
     values.forEach(_addParam);
-    if (!_isRequiredType) _generated.writeln('@required R Function() orElse,');
+    _addOrElseCallBack();
     _generated.writeln('})');
+  }
+
+  void _addRequiredParamHandler() {
+    if (_isParamRequired()) {
+      _generated.writeln('{');
+      _generated.writeln('switch(this) {');
+      values.forEach(_addSwitchCase);
+      _generated.writeln('}');
+      _generated.writeln('}');
+    }
   }
 
   void _addReturnTypeAndName() => _generated.write('R ${_methodName()}<R>');
 
-  void _assertField(FieldElement element) {
-    if (_isRequiredType) _generated.writeln('assert(${element.name} != null);');
+  void _addSwitchCase(FieldElement field) {
+    final name = field.name;
+    final condition = 'case ${element.name}.$name: ';
+    final returnValue = _getReturnStatement(name);
+    _generated.writeln('$condition $returnValue');
   }
 
-  void _ignoreReturnTypeWarnings() {
-    if (_methodType == MethodType.when || _methodType == MethodType.map) {
-      _generated.writeln('// ignore: missing_return');
-    }
+  String _getCallBackArg(String callBackName) {
+    return '${_shouldAddArgs() ? '${element.name} $callBackName' : ''}';
+  }
+
+  String _getReturnStatement(String callbackName) {
+    return 'return $callbackName(${_shouldAddArgs() ? 'this' : ''});';
   }
 
   void _initialize(MethodType methodType) {
     _generated.clear();
     _methodType = methodType;
-    _isRequiredType =
-        methodType == MethodType.when || methodType == MethodType.map;
-    _shouldAddArgs =
-        methodType == MethodType.map || methodType == MethodType.maybeMap;
+  }
+
+  bool _isParamRequired() {
+    return _methodType == MethodType.when || _methodType == MethodType.map;
   }
 
   String _methodName() {
@@ -129,7 +141,10 @@ class MethodGenerator {
       case MethodType.when:
         return 'when';
     }
-    return '';
+  }
+
+  bool _shouldAddArgs() {
+    return _methodType == MethodType.map || _methodType == MethodType.maybeMap;
   }
 }
 

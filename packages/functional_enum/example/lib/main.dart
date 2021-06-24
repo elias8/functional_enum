@@ -2,7 +2,7 @@ import 'package:functional_enum_annotation/functional_enum_annotation.dart';
 
 part 'main.g.dart';
 
-@functional_enum
+@functionalEnum
 enum Shape { square, circle, triangle }
 
 void main() {
