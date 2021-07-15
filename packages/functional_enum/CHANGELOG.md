@@ -1,3 +1,7 @@
+## 1.1.2
+
+- Use `SharedPartBuilder` to write generated code to `.g.dart` file
+
 ## 1.1.1
 
 - Updated README.md
