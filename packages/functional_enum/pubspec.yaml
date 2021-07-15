@@ -10,6 +10,5 @@ dependencies:
   analyzer: ^1.7.0
   build: ^2.0.2
   build_config: ^1.0.0
-  functional_enum_annotation: ^1.2.0
-  meta: ^1.4.0
+  functional_enum_annotation: ^1.2.1
   source_gen: ^1.0.2
