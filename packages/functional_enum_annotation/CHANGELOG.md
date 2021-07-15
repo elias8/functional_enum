@@ -1,3 +1,7 @@
+## 1.2.1
+
+- Downgraded `meta` dependency to fix conflicts with other builders 
+
 ## 1.2.0
 
 - Migrated to null-safety
