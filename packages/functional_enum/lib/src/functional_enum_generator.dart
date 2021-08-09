@@ -15,7 +15,7 @@ class FunctionalEnumGenerator extends GeneratorForAnnotation<FunctionalEnum> {
       return EnumExtensionGenerator(element).generate();
     } else {
       throw InvalidGenerationSourceError(
-        '''@functional_enum can only be applied on enum types. Instead, you are trying to use is it on a ${element.kind} ${element.name}.''',
+        '''@functionalEnum can only be applied on enum types. Instead, you are trying to use is it on a ${element.kind} ${element.name}.''',
         element: element,
       );
     }
