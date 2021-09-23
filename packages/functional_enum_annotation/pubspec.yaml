@@ -1,6 +1,6 @@
 name: functional_enum_annotation
 description: Annotations for the functional_enum code generator package.
-version: 1.2.1
+version: 1.2.2
 homepage: https://github.com/Elias8/functional_enum
 
 environment:

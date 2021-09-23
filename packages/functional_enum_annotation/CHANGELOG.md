@@ -1,3 +1,7 @@
+## 1.2.2
+
+- Upgraded `meta` dependency
+
 ## 1.2.1
 
 - Downgraded `meta` dependency to fix conflicts with other builders 
