@@ -8,6 +8,8 @@ import 'package:source_gen/source_gen.dart';
 import 'enum_generator.dart';
 
 class FunctionalEnumGenerator extends GeneratorForAnnotation<FunctionalEnum> {
+  const FunctionalEnumGenerator();
+
   @override
   FutureOr<String> generateForAnnotatedElement(
       Element element, ConstantReader annotation, BuildStep buildStep) {
