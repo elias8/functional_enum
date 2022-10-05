@@ -1,14 +1,14 @@
 name: functional_enum
 description: Code generator for functional enum that makes the use of enums much better.
-version: 1.1.4
+version: 1.1.5
 homepage: https://github.com/Elias8/functional_enum
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
-  analyzer: ^2.3.0
-  build: ^2.1.0
-  build_config: ^1.0.0
-  functional_enum_annotation: ^1.2.1
-  source_gen: ^1.1.0
+  analyzer: ^5.1.0
+  build: ^2.3.1
+  build_config: ^1.1.0
+  functional_enum_annotation: ^1.2.3
+  source_gen: ^1.2.5
