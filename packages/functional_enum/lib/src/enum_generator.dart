@@ -75,8 +75,9 @@ class MethodGenerator {
   }
 
   void _addOrElseCallBack() {
-    if (!_isParamRequired())
+    if (!_isParamRequired()) {
       _generated.writeln('required R Function() orElse,');
+    }
   }
 
   void _addParam(FieldElement field) {

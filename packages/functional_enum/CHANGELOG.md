@@ -1,3 +1,11 @@
+## 1.1.5
+
+- Upgraded dependencies
+
+## 1.1.4
+
+- Upgraded dependencies
+
 ## 1.1.3
 
 - Updated README doc
