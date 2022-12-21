@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 
 class EnumExtensionGenerator {
-  final InterfaceElement element;
+  final EnumElement element;
   final _generated = StringBuffer();
 
   EnumExtensionGenerator(this.element)
@@ -45,7 +45,7 @@ class EnumExtensionGenerator {
 }
 
 class MethodGenerator {
-  final InterfaceElement element;
+  final EnumElement element;
   final List<FieldElement> values;
   final _generated = StringBuffer();
   late MethodType _methodType;
