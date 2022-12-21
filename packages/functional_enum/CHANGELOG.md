@@ -1,3 +1,7 @@
+## 1.1.6
+
+- Fix: `@functionalEnum` can only be applied on enum types (thanks to @Almighty-Alpaca)
+
 ## 1.1.5
 
 - Upgraded dependencies
