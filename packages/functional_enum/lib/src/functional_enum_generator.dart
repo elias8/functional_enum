@@ -13,7 +13,7 @@ class FunctionalEnumGenerator extends GeneratorForAnnotation<FunctionalEnum> {
   @override
   FutureOr<String> generateForAnnotatedElement(
       Element element, ConstantReader annotation, BuildStep buildStep) {
-    if (element.kind == ElementKind.ENUM && element is ClassElement) {
+    if (element.kind == ElementKind.ENUM && element is EnumElement) {
       return EnumExtensionGenerator(element).generate();
     } else {
       throw InvalidGenerationSourceError(

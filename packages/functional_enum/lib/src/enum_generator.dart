@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 
 class EnumExtensionGenerator {
-  final ClassElement element;
+  final EnumElement element;
   final _generated = StringBuffer();
 
   EnumExtensionGenerator(this.element)
@@ -22,7 +22,11 @@ class EnumExtensionGenerator {
     _generated.writeln(field);
   }
 
-  void _generateCheckers() => element.fields.skip(2).forEach(_generateChecker);
+  void _generateCheckers() {
+    element.fields
+        .where((element) => element.isEnumConstant)
+        .forEach(_generateChecker);
+  }
 
   void _generateExtensionBottom() => _generated.writeln('}');
 
@@ -41,13 +45,14 @@ class EnumExtensionGenerator {
 }
 
 class MethodGenerator {
-  final ClassElement element;
+  final EnumElement element;
   final List<FieldElement> values;
   final _generated = StringBuffer();
   late MethodType _methodType;
 
   MethodGenerator({required this.element})
-      : values = element.fields.skip(2).toList();
+      : values =
+            element.fields.where((element) => element.isEnumConstant).toList();
 
   String generate(MethodType type) {
     _initialize(type);
